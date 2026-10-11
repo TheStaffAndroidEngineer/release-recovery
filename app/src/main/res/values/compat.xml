@@ -1,0 +1,1 @@
+<resources><style name="Theme.CompatProbe" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:windowActionModeOverlay">true</item></style></resources>

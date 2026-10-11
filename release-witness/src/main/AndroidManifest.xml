@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:label="Common Goods release witness" android:allowBackup="false" />
+    <instrumentation android:name="staff.android.release.witness.StateWitness" android:targetPackage="staff.android.release" android:functionalTest="true" android:handleProfiling="false" />
+</manifest>
