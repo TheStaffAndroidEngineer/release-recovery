@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Inspect actual native-library ELF load alignment and APK zip alignment."""
+import os
 from pathlib import Path
 import argparse,hashlib,json,struct,subprocess,zipfile
-p=argparse.ArgumentParser();p.add_argument('--apk',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--zipalign',type=Path,default=Path.home()/'Library/Android/sdk/build-tools/37.0.0/zipalign');a=p.parse_args();assert not a.out.exists()
+p=argparse.ArgumentParser();p.add_argument('--apk',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--zipalign',type=Path,default=Path(os.environ.get('ANDROID_HOME', str(Path.home() / 'Library/Android/sdk'))) / 'build-tools/37.0.0/zipalign');a=p.parse_args();assert not a.out.exists()
 r={'apk':str(a.apk),'sha256':hashlib.sha256(a.apk.read_bytes()).hexdigest(),'scope':'Packaged native-library ELF PT_LOAD and ZIP alignment; runtime execution remains a separate API37/16KB emulator campaign.','libraries':[]}
 proc=subprocess.run([str(a.zipalign),'-c','-P','16','4',str(a.apk)],capture_output=True,text=True);r['zipalign']={'command':[str(a.zipalign),'-c','-P','16','4',str(a.apk)],'exit':proc.returncode,'stdout':proc.stdout,'stderr':proc.stderr}
 with zipfile.ZipFile(a.apk) as z:
